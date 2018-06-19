@@ -1,0 +1,9 @@
+    - name: Aplicacao
+      template:
+        src: ../templates/index.html
+        dest: /var/www/html/index.html
+
+    - name: Baixando imagem
+      get_url:
+        url: http://jgovernor-media.redmonk.com/jgovernor/files/2017/06/atlassian-marketplace.png
+        dest: /var/www/html/imagem.jpg

@@ -1,0 +1,9 @@
+  - name: Instalando PUPPET - CentOS
+    yum:
+     name: /root/puppet5-release-el-7.noarch.rpm
+     state: present
+
+  - name: Instalando Puppet-Agent - CENTOS
+    yum:
+      name: puppet-agent
+      state: present    

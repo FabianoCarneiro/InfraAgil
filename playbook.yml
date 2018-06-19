@@ -1,0 +1,59 @@
+---
+- name: Playbook de Desafio
+  hosts: all
+  tasks: 
+   
+  - name: Parando o nginx
+    service:
+      name: nginx
+      state: stopped
+    ignore_erros: True
+
+  - name: Removendo o nginx - Ubuntu
+    apt: name=nginx state=absent update_cache=yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Removendo o nginx - CentOS
+    yum: name=nginx state=absent 
+    when: ansible_distribution == "CentOS"
+
+  - name: Intalando Pacotes - Ubuntu
+    apt: 
+      name: "{{item}}"
+      state: present
+      update_cache: yes
+    with_items:
+    - "apache2"
+    - "libapache2-mod-php7.0"
+    - "php7.0"
+    notify: apache
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Instalando Pacotes = CentOS
+    yum: 
+      name: "{{ item }}" 
+      state: present
+    with_items:
+    - "httpd"
+    - "php"    
+    notify: http
+    when: ansible_distribution == "CentOS"
+
+  - name:
+    command: a2enmod php7.0   
+    when: ansible_distribution ==  "Ubuntu"
+
+  - name: Enviando arquivo
+    copy:
+      src: index.php
+      dest: /var/www/html/index.php
+
+  handlers:
+  - name: apache
+    service:
+      name: apache2
+      state: restarted
+  - name: http
+    service: 
+      name: httpd
+      state: restarted

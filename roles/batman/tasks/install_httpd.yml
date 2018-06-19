@@ -1,0 +1,7 @@
+    - name: Instalando o Apache - CentOS
+      yum: name=httpd state=present
+      when: ansible_os_family == "RedHat"
+
+    - name: Iniciando o Apache - CentOS
+      service: name=httpd state=restarted
+      when: ansible_os_family == "RedHat"

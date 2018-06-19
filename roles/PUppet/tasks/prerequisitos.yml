@@ -1,0 +1,11 @@
+    - name:  Baixando PUppet CentOS
+      get_url:
+        url: https://yum.puppet.com/puppet5/puppet5-release-el-7.noarch.rpm
+        dest: /root/ 
+      when: ansible_distribution == "CentOS" 
+
+    - name: Baixando PUppet Ubuntu 
+      get_url:
+        url: https://apt.puppetlabs.com/puppet5-release-xenial.deb
+        dest: /root    
+      when: ansible_distribution == "Ubuntu"
